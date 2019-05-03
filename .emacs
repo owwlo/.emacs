@@ -768,6 +768,15 @@ Please set my:ycmd-server-command appropriately in ~/.emacs.el.\n"
   (global-hungry-delete-mode t)
   )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; delete without killing the region
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun my-delete-backward-word()
+  (interactive "*")
+  (push-mark)
+  (backward-word)
+  (delete-region (point) (mark)))
+(global-set-key (kbd "M-<backspace>") 'my-delete-backward-word)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Flyspell Mode for Spelling Corrections
@@ -850,7 +859,7 @@ Please set my:ycmd-server-command appropriately in ~/.emacs.el.\n"
         (width . 110) (height . 90) ;; size
         ))
 ;; Enable line numbers on the LHS
-(global-linum-mode -1)
+(global-linum-mode 1)
 ;; Set the font to size 9 (90/10).
 (set-face-attribute 'default nil :height my-font-size)
 
