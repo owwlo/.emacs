@@ -4,17 +4,6 @@
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Configuration/Customization:
-;; Defines global variables that are later used to customize and set
-;; up packages.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Specify the ycmd server command and path to the ycmd directory *inside* the
-;; cloned ycmd directory
-(defvar my:ycmd-server-command '("python" "/home/nils/Research/ycmd/ycmd"))
-(defvar my:ycmd-extra-conf-whitelist '("~/.ycm_extra_conf.py"))
-(defvar my:ycmd-global-config "~/.ycm_extra_conf.py")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Set packages to install
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq package-archives '(("melpa-stable" . "https://stable.melpa.org/packages/")
@@ -108,8 +97,6 @@
 (global-set-key (kbd "M-h") 'backward-kill-word)
 ;; Use meta+tab word completion
 (global-set-key (kbd "M-TAB") 'dabbrev-expand)
-;; Easy undo key
-(global-set-key (kbd "C-/") 'undo)
 ;; Comment or uncomment the region
 (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region)
 ;; Indent after a newline, if required by syntax of language
@@ -387,6 +374,12 @@
 (use-package wgrep
   :ensure t)
 
+(use-package elpy
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Edit server to allow editing of things in Chrome with Emacs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -517,18 +510,6 @@
     (clang-format-buffer)))
 
 (add-hook 'before-save-hook 'clang-format-buffer-smart)
-
-;; (defun clang-format-buffer-smart ()
-;;   "Reformat buffer if .clang-format exists in the projectile root."
-;;   (when (f-exists? (expand-file-name ".clang-format" (projectile-project-root)))
-;;     (clang-format-buffer)))
-
-;; (defun clang-format-buffer-smart-on-save ()
-;;   "Add auto-save hook for clang-format-buffer-smart."
-;;   (add-hook 'before-save-hook (lambda() (message "wulalala") ('clang-format-buffer-smart nil t))))
-
-;; (add-hook 'c++-mode-hook 'clang-format-buffer-smart-on-save nil t)
-;; (add-hook 'c-mode-hook 'clang-format-buffer-smart-on-save nil t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -898,7 +879,7 @@ Please set my:ycmd-server-command appropriately in ~/.emacs.el.\n"
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (powerline lua-mode zzz-to-char yapfify writegood-mode window-numbering which-key wgrep web-mode vlf use-package string-inflection rainbow-delimiters origami multiple-cursors modern-cpp-font-lock magit-gerrit json-mode hungry-delete google-c-style git-gutter flyspell-correct-ivy flycheck-pyflakes elpy edit-server counsel-etags projectile clang-format beacon autopair auto-package-update)))
+    (powerline lua-mode zzz-to-char yapfify writegood-mode window-numbering which-key wgrep web-mode vlf use-package string-inflection rainbow-delimiters origami multiple-cursors modern-cpp-font-lock magit-gerrit json-mode hungry-delete google-c-style git-gutter flyspell-correct-ivy flycheck-pyflakes elpy edit-server counsel-etags projectile clang-format beacon elpy autopair auto-package-update)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
