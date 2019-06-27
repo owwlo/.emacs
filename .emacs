@@ -475,10 +475,10 @@
   (elpy-enable)
   )
 
-(use-package yapfify
-  :ensure t
-  :init
-  (add-hook 'python-mode-hook 'yapf-mode))
+;; (use-package yapfify
+;;   :ensure t
+;;   :init
+;;   (add-hook 'python-mode-hook 'yapf-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Clang-format
